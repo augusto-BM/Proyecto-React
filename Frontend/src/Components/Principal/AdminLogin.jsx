@@ -1,9 +1,9 @@
 import { useState } from 'react'
-import './style.css'
+import '../style.css'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 
-const Login = () => {
+const AdminLogin = () => {
 
     const [values, setValues] = useState({
         email: '',
@@ -33,7 +33,7 @@ const Login = () => {
             <div className='text-warning'>
                 {error && error}
             </div>
-            <h2>Login Page</h2>
+            <h2>Login Administrador</h2>
             <form onSubmit={handleSubmit}>
                 <div className='mb-3'>
                     <label htmlFor="email"><strong>Email:</strong></label>
@@ -56,4 +56,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default AdminLogin

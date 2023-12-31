@@ -1,17 +1,18 @@
-/* import express from 'express'
+import express from 'express'
 import con from "../utils/db.js";
 import jwt from "jsonwebtoken";
 import bcrypt from 'bcrypt'
 
 const router = express.Router()
 
-router.post("/employee_login", (req, res) => {
+  //LOGUEARSE COMO EMPLEADO
+  router.post("/employee_login", (req, res) => {
     const sql = "SELECT * from employee Where email = ?";
     con.query(sql, [req.body.email], (err, result) => {
-      if (err) return res.json({ loginStatus: false, Error: "Query error" });
+      if (err) return res.json({ loginStatus: false, Error: "Error de consulta" });
       if (result.length > 0) {
         bcrypt.compare(req.body.password, result[0].password, (err, response) => {
-            if (err) return res.json({ loginStatus: false, Error: "Wrong Password" });
+            if (err) return res.json({ loginStatus: false, Error: "Contraseña incorrecta" });
             if(response) {
                 const email = result[0].email;
                 const token = jwt.sign(
@@ -25,11 +26,12 @@ router.post("/employee_login", (req, res) => {
         })
         
       } else {
-          return res.json({ loginStatus: false, Error:"wrong email or password" });
+          return res.json({ loginStatus: false, Error:"Correo o contraseña incorrecta" });
       }
     });
   });
 
+  //LISTAR LA INFORMACION DEL EMPLEADO LOGUEADO
   router.get('/detail/:id', (req, res) => {
     const id = req.params.id;
     const sql = "SELECT * FROM employee where id = ?"
@@ -39,9 +41,10 @@ router.post("/employee_login", (req, res) => {
     })
   })
 
+  //CERRAR SESION DEL EMPLEADO
   router.get('/logout', (req, res) => {
     res.clearCookie('token')
     return res.json({Status: true})
   })
 
-  export {router as EmployeeRouter} */
+  export {router as EmployeeRouter} 
